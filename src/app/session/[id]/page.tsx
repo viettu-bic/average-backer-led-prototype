@@ -7,12 +7,11 @@ import { StoredSession } from "@/lib/mockData";
 // ─── Icons ────────────────────────────────────────────────────────────────────
 function ArrowLeftIcon() {
   return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
       <polyline points="15 18 9 12 15 6" />
     </svg>
   );
 }
-
 function StarIcon() {
   return (
     <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="1">
@@ -20,87 +19,77 @@ function StarIcon() {
     </svg>
   );
 }
-
 function ClockIcon() {
   return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-      <circle cx="12" cy="12" r="10" />
-      <polyline points="12 6 12 12 16 14" />
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" />
     </svg>
   );
 }
-
 function UsersIcon() {
   return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-      <circle cx="9" cy="7" r="4" />
-      <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" />
+      <path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" />
     </svg>
   );
 }
-
+function ShieldIcon() {
+  return (
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+    </svg>
+  );
+}
 function VideoIcon() {
   return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-      <polygon points="23 7 16 12 23 17 23 7" />
-      <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <polygon points="23 7 16 12 23 17 23 7" /><rect x="1" y="5" width="15" height="14" rx="2" />
     </svg>
   );
 }
-
-function BadgeCheckIcon() {
+function MonitorIcon() {
   return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-      <polyline points="9 12 11 14 15 10" />
-    </svg>
-  );
-}
-
-// ─── Google Meet SVG icon ─────────────────────────────────────────────────────
-function MeetIcon({ size = 32 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 75 65" fill="none">
-      <rect x="0" y="3" width="50" height="59" rx="6" fill="#1a73e8" />
-      <path d="M50 22l18-14v49L50 43V22z" fill="#34a853" />
-      <rect x="8" y="15" width="34" height="10" rx="2" fill="#fff" opacity="0.25" />
-      <rect x="8" y="29" width="34" height="18" rx="2" fill="#fff" opacity="0.15" />
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <rect x="2" y="3" width="20" height="14" rx="2" />
+      <line x1="8" y1="21" x2="16" y2="21" /><line x1="12" y1="17" x2="12" y2="21" />
     </svg>
   );
 }
 
 // ─── Tag color hash ───────────────────────────────────────────────────────────
 const TAG_PALETTES = [
-  "bg-indigo-100 text-indigo-700 border border-indigo-200",
-  "bg-emerald-100 text-emerald-700 border border-emerald-200",
-  "bg-violet-100 text-violet-700 border border-violet-200",
-  "bg-amber-100 text-amber-700 border border-amber-200",
-  "bg-pink-100 text-pink-700 border border-pink-200",
-  "bg-sky-100 text-sky-700 border border-sky-200",
-  "bg-teal-100 text-teal-700 border border-teal-200",
-  "bg-rose-100 text-rose-700 border border-rose-200",
+  "bg-teal-50 text-teal-700 border border-teal-200",
+  "bg-emerald-50 text-emerald-700 border border-emerald-200",
+  "bg-violet-50 text-violet-700 border border-violet-200",
+  "bg-amber-50 text-amber-700 border border-amber-200",
+  "bg-pink-50 text-pink-700 border border-pink-200",
+  "bg-sky-50 text-sky-700 border border-sky-200",
+  "bg-orange-50 text-orange-700 border border-orange-200",
+  "bg-rose-50 text-rose-700 border border-rose-200",
 ];
-
 function tagColor(tag: string) {
   let h = 0;
   for (const c of tag) h = (h * 31 + c.charCodeAt(0)) % TAG_PALETTES.length;
   return TAG_PALETTES[h];
 }
 
+// ─── Trust badge ──────────────────────────────────────────────────────────────
+function TrustBadge({ score, sessions }: { score: number; sessions: number }) {
+  if (sessions < 3) return <span className="typo-paragraph-mini-semibold bg-[#fffbeb] text-[#d97706] border border-[#f59e0b] px-2 py-0.5 rounded-full">New Creator</span>;
+  if (score >= 80) return <span className="typo-paragraph-mini-semibold bg-[#f0fdf4] text-[#16a34a] border border-[#22c55e] px-2 py-0.5 rounded-full">★ Top Rated</span>;
+  return <span className="typo-paragraph-mini-semibold bg-[#f3f3f2] text-[#6f6f6a] border border-[#e9e9e7] px-2 py-0.5 rounded-full">Score {score}</span>;
+}
+
 // ─── Avatar ───────────────────────────────────────────────────────────────────
 function Avatar({ src, name, size = 64 }: { src: string; name: string; size?: number }) {
   return (
     <img
-      src={src}
-      alt={name}
-      width={size}
-      height={size}
+      src={src} alt={name} width={size} height={size}
       style={{ width: size, height: size }}
-      className="rounded-full object-cover bg-indigo-100 flex-shrink-0 ring-4 ring-white shadow"
+      className="rounded-full object-cover bg-[#f0fdfa] flex-shrink-0 ring-2 ring-white shadow-sm"
       onError={(e) => {
-        (e.target as HTMLImageElement).src = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=6366f1&color=fff&size=${size * 2}`;
+        (e.target as HTMLImageElement).src = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=0f766e&color=fff&size=${size * 2}`;
       }}
     />
   );
@@ -108,54 +97,45 @@ function Avatar({ src, name, size = 64 }: { src: string; name: string; size?: nu
 
 // ─── Profile Card ─────────────────────────────────────────────────────────────
 function ProfileCard({
-  avatar,
-  name,
-  handle,
-  specialty,
-  rating,
-  sessions,
-  role,
-  accentColor,
+  avatar, name, handle, specialty, rating, sessions, trustScore, role,
 }: {
-  avatar: string;
-  name: string;
-  handle: string;
-  specialty: string;
-  rating: number;
-  sessions: number;
+  avatar: string; name: string; handle: string; specialty: string;
+  rating: number; sessions: number; trustScore: number;
   role: "Backer" | "Creator";
-  accentColor: string;
 }) {
+  const isBacker = role === "Backer";
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 flex flex-col items-center text-center gap-3 flex-1">
+    <div className="bg-white rounded-lg border border-[#e9e9e7] shadow p-5 flex flex-col items-center text-center gap-3 flex-1">
       <div className="relative">
-        <Avatar src={avatar} name={name} size={72} />
-        <span
-          className={`absolute -bottom-1 -right-1 text-xs font-bold px-2 py-0.5 rounded-full text-white ${accentColor}`}
-        >
+        <Avatar src={avatar} name={name} size={64} />
+        <span className={`absolute -bottom-1 -right-1 typo-paragraph-mini-semibold px-2 py-0.5 rounded-full text-white ${isBacker ? "bg-[#0f766e]" : "bg-[#16a34a]"}`}>
           {role}
         </span>
       </div>
       <div>
-        <p className="font-bold text-gray-900">{name}</p>
-        <p className="text-xs text-gray-400">{handle}</p>
-        <p className="text-xs text-indigo-600 font-medium mt-1">{specialty}</p>
+        <p className="typo-paragraph-semibold text-[#252522]">{name}</p>
+        <p className="typo-paragraph-mini text-[#6f6f6a]">{handle}</p>
+        <p className="typo-paragraph-mini-semibold text-[#0f766e] mt-1 leading-snug">{specialty}</p>
       </div>
-      <div className="flex items-center gap-4 text-xs text-gray-500 pt-1 border-t border-gray-50 w-full justify-center">
-        <span className="flex items-center gap-1 text-amber-500 font-bold">
-          <StarIcon />
-          {rating.toFixed(1)}
-        </span>
-        <span className="flex items-center gap-1">
-          <UsersIcon />
-          {sessions} sessions
-        </span>
+      <div className="w-full pt-3 border-t border-[#f3f3f2] flex flex-col gap-2">
+        {!isBacker && (
+          <div className="flex justify-center">
+            <TrustBadge score={trustScore} sessions={sessions} />
+          </div>
+        )}
+        <div className="flex items-center justify-center gap-4 typo-paragraph-mini text-[#6f6f6a]">
+          <span className="flex items-center gap-1 text-[#d97706] font-semibold"><StarIcon />{rating.toFixed(1)}</span>
+          <span className="flex items-center gap-1"><UsersIcon />{sessions} sessions</span>
+          {!isBacker && (
+            <span className="flex items-center gap-1 text-[#0f766e] font-semibold"><ShieldIcon />{trustScore}/100</span>
+          )}
+        </div>
       </div>
     </div>
   );
 }
 
-// ─── Timer display ────────────────────────────────────────────────────────────
+// ─── Countdown Timer ──────────────────────────────────────────────────────────
 function Timer({ remaining }: { remaining: number }) {
   const clamped = Math.max(0, remaining);
   const h = Math.floor(clamped / 3600);
@@ -166,14 +146,27 @@ function Timer({ remaining }: { remaining: number }) {
 
   return (
     <div className="flex flex-col items-center gap-1">
-      <div className={`flex items-center gap-1.5 font-mono text-4xl font-bold tracking-widest ${done ? "text-red-300" : "text-white"}`}>
-        {h > 0 && <>{fmt(h)}<span className="opacity-50">:</span></>}
+      <p className="typo-paragraph-mini-semibold text-white/60 uppercase tracking-widest mb-1">Time remaining</p>
+      <div className={`flex items-center gap-1 font-mono text-5xl font-bold tracking-widest ${done ? "text-red-300" : "text-white"}`}>
+        {h > 0 && <><span>{fmt(h)}</span><span className="text-white/30 text-4xl">:</span></>}
         <span>{fmt(m)}</span>
-        <span className="opacity-50">:</span>
+        <span className="text-white/30 text-4xl">:</span>
         <span>{fmt(s)}</span>
       </div>
-      {done && <span className="text-red-300 text-xs font-semibold tracking-wide uppercase">Session time ended</span>}
+      {done && <span className="typo-paragraph-mini-semibold text-red-300 uppercase tracking-wide mt-1">Session time ended</span>}
     </div>
+  );
+}
+
+// ─── Google Meet icon ─────────────────────────────────────────────────────────
+function MeetIcon({ size = 32 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 75 65" fill="none">
+      <rect x="0" y="3" width="50" height="59" rx="6" fill="#1a73e8" />
+      <path d="M50 22l18-14v49L50 43V22z" fill="#34a853" />
+      <rect x="10" y="16" width="30" height="8" rx="2" fill="#fff" opacity="0.25" />
+      <rect x="10" y="30" width="30" height="20" rx="2" fill="#fff" opacity="0.15" />
+    </svg>
   );
 }
 
@@ -186,7 +179,6 @@ export default function SessionPage({ params }: { params: Promise<{ id: string }
   const [remaining, setRemaining] = useState(0);
   const [loading, setLoading] = useState(true);
 
-  // Persist joinedAt so rejoin continues the same countdown
   const JOINED_KEY = `coachingSession_joinedAt_${id}`;
 
   useEffect(() => {
@@ -196,19 +188,15 @@ export default function SessionPage({ params }: { params: Promise<{ id: string }
         const data: StoredSession = JSON.parse(raw);
         if (data.requestId === id) {
           setSession(data);
-          // Restore joined state if user already started the session
-          const storedJoinedAt = localStorage.getItem(JOINED_KEY);
-          if (storedJoinedAt) {
-            const elapsed = Math.floor((Date.now() - parseInt(storedJoinedAt)) / 1000);
-            const totalSecs = data.request.coachingDuration * 60;
-            setRemaining(totalSecs - elapsed);
+          const storedAt = localStorage.getItem(JOINED_KEY);
+          if (storedAt) {
+            const elapsed = Math.floor((Date.now() - parseInt(storedAt)) / 1000);
+            setRemaining(data.request.coachingDuration * 60 - elapsed);
             setJoined(true);
           }
         }
       }
-    } catch {
-      // ignore parse errors
-    }
+    } catch { /* ignore */ }
     setLoading(false);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
@@ -216,9 +204,9 @@ export default function SessionPage({ params }: { params: Promise<{ id: string }
   useEffect(() => {
     if (!joined || !session) return;
     const interval = setInterval(() => {
-      const storedJoinedAt = localStorage.getItem(JOINED_KEY);
-      if (!storedJoinedAt) return;
-      const elapsed = Math.floor((Date.now() - parseInt(storedJoinedAt)) / 1000);
+      const storedAt = localStorage.getItem(JOINED_KEY);
+      if (!storedAt) return;
+      const elapsed = Math.floor((Date.now() - parseInt(storedAt)) / 1000);
       setRemaining(session.request.coachingDuration * 60 - elapsed);
     }, 1000);
     return () => clearInterval(interval);
@@ -227,7 +215,6 @@ export default function SessionPage({ params }: { params: Promise<{ id: string }
 
   const handleJoin = useCallback(() => {
     window.open("about:blank", "_blank");
-    // Only record start time on first join
     if (!localStorage.getItem(JOINED_KEY)) {
       localStorage.setItem(JOINED_KEY, Date.now().toString());
       if (session) setRemaining(session.request.coachingDuration * 60);
@@ -238,19 +225,19 @@ export default function SessionPage({ params }: { params: Promise<{ id: string }
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-indigo-400 border-t-transparent rounded-full animate-spin" />
+      <div className="min-h-screen bg-[#f7f7f6] flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-[#0f766e] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
 
   if (!session) {
     return (
-      <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center gap-4">
-        <p className="text-gray-500 text-lg">Session not found.</p>
+      <div className="min-h-screen bg-[#f7f7f6] flex flex-col items-center justify-center gap-4">
+        <p className="typo-paragraph text-[#6f6f6a]">Session not found.</p>
         <button
           onClick={() => router.push("/")}
-          className="flex items-center gap-2 text-indigo-600 hover:text-indigo-700 font-semibold"
+          className="flex items-center gap-1.5 text-[#0f766e] hover:text-[#115e59] typo-paragraph-small-semibold transition-colors"
         >
           <ArrowLeftIcon />
           Back to Marketplace
@@ -262,96 +249,88 @@ export default function SessionPage({ params }: { params: Promise<{ id: string }
   const { request, creator } = session;
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Nav */}
-      <header className="bg-white border-b border-gray-100 sticky top-0 z-40">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 h-16 flex items-center gap-4">
+    <div className="min-h-screen bg-[#f7f7f6]">
+      {/* ── Nav ── */}
+      <header className="bg-white border-b border-[#e9e9e7] sticky top-0 z-40">
+        <div className="max-w-4xl mx-auto px-6 h-14 flex items-center gap-4">
           <button
             onClick={() => router.push("/")}
-            className="flex items-center gap-1.5 text-gray-500 hover:text-gray-900 transition-colors text-sm font-medium"
+            className="flex items-center gap-1.5 text-[#6f6f6a] hover:text-[#252522] typo-paragraph-small-medium transition-colors"
           >
             <ArrowLeftIcon />
-            Back
+            Marketplace
           </button>
-          <div className="h-5 w-px bg-gray-200" />
+          <div className="h-4 w-px bg-[#e9e9e7]" />
           <div className="flex items-center gap-2">
-            <div className="w-6 h-6 bg-indigo-600 rounded-md flex items-center justify-center">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="white">
-                <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z" />
+            <div className="w-6 h-6 bg-[#0f766e] rounded-md flex items-center justify-center">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="white">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z" />
               </svg>
             </div>
-            <span className="font-bold text-gray-900 text-sm">CoachMatch</span>
+            <span className="font-heading font-semibold text-[#252522] text-sm">CoachMatch</span>
           </div>
           <div className="ml-auto">
-            <span
-              className={`text-xs font-bold px-3 py-1 rounded-full ${
-                joined
-                  ? "bg-emerald-100 text-emerald-700"
-                  : "bg-amber-100 text-amber-700"
-              }`}
-            >
+            <span className={`typo-paragraph-mini-semibold px-2.5 py-1 rounded-full ${
+              joined
+                ? "bg-[#f0fdf4] text-[#16a34a] border border-[#22c55e]"
+                : "bg-[#fffbeb] text-[#d97706] border border-[#f59e0b]"
+            }`}>
               {joined ? "● Live" : "● Ready"}
             </span>
           </div>
         </div>
       </header>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 flex flex-col gap-6">
+      <div className="max-w-4xl mx-auto px-6 py-6 flex flex-col gap-5">
 
-        {/* Title card */}
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-          <div className="flex items-start gap-4">
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2 mb-2">
-                <span className="text-xs font-bold bg-indigo-100 text-indigo-700 px-2.5 py-0.5 rounded-full flex items-center gap-1">
-                  <BadgeCheckIcon />
-                  Confirmed Session
-                </span>
-              </div>
-              <h1 className="text-xl sm:text-2xl font-bold text-gray-900 leading-snug">
-                {request.title}
-              </h1>
-              <p className="text-gray-500 mt-3 text-sm leading-relaxed">{request.description}</p>
-
-              {/* Tags */}
-              <div className="flex flex-wrap gap-2 mt-4">
-                {request.tags.map((tag) => (
-                  <span key={tag} className={`text-xs px-2.5 py-1 rounded-full font-medium ${tagColor(tag)}`}>
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
+        {/* ── Request details card ── */}
+        <div className="bg-white rounded-lg border border-[#e9e9e7] shadow p-6">
+          <div className="flex items-center gap-2 mb-3">
+            <span className="typo-paragraph-mini-semibold bg-[#f0fdfa] text-[#0f766e] border border-[#0d9488]/30 px-2.5 py-0.5 rounded-full flex items-center gap-1">
+              <ShieldIcon />
+              Session Confirmed
+            </span>
           </div>
 
-          {/* Session stats */}
-          <div className="grid grid-cols-3 gap-4 mt-6 pt-5 border-t border-gray-50">
+          <h1 className="font-heading text-2xl font-semibold text-[#252522] leading-snug">
+            {request.title}
+          </h1>
+          <p className="typo-paragraph text-[#6f6f6a] mt-3 leading-relaxed">{request.description}</p>
+
+          <div className="flex flex-wrap gap-1.5 mt-4">
+            {request.tags.map((tag) => (
+              <span key={tag} className={`typo-paragraph-mini-semibold px-2 py-0.5 rounded-full ${tagColor(tag)}`}>
+                {tag}
+              </span>
+            ))}
+          </div>
+
+          {/* Stats */}
+          <div className="grid grid-cols-3 gap-3 mt-5 pt-5 border-t border-[#f3f3f2]">
             <div className="text-center">
-              <p className="text-xs text-gray-400 font-medium uppercase tracking-wide">Duration</p>
-              <p className="text-lg font-bold text-gray-900 mt-1 flex items-center justify-center gap-1.5">
-                <ClockIcon />
-                {request.coachingDuration} min
+              <p className="typo-paragraph-mini-semibold text-[#6f6f6a] uppercase tracking-wide">Duration</p>
+              <p className="typo-heading-4 text-[#252522] mt-1 flex items-center justify-center gap-1.5">
+                <ClockIcon />{request.coachingDuration} min
               </p>
             </div>
             <div className="text-center">
-              <p className="text-xs text-gray-400 font-medium uppercase tracking-wide">Price</p>
-              <p className="text-lg font-bold text-indigo-600 mt-1">${request.price}</p>
+              <p className="typo-paragraph-mini-semibold text-[#6f6f6a] uppercase tracking-wide">Session Fee</p>
+              <p className="typo-heading-4 text-[#0f766e] mt-1">${request.price}</p>
             </div>
             <div className="text-center">
-              <p className="text-xs text-gray-400 font-medium uppercase tracking-wide">Format</p>
-              <p className="text-lg font-bold text-gray-900 mt-1 flex items-center justify-center gap-1.5">
-                <VideoIcon />
-                1-on-1
+              <p className="typo-paragraph-mini-semibold text-[#6f6f6a] uppercase tracking-wide">Format</p>
+              <p className="typo-heading-4 text-[#252522] mt-1 flex items-center justify-center gap-1.5">
+                <VideoIcon />1-on-1
               </p>
             </div>
           </div>
         </div>
 
-        {/* Profiles */}
+        {/* ── Participants ── */}
         <div>
-          <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">
-            Session Participants
-          </h2>
+          <p className="typo-paragraph-mini-semibold text-[#6f6f6a] uppercase tracking-wide mb-3">
+            Participants
+          </p>
           <div className="flex gap-4">
             <ProfileCard
               avatar={request.backerAvatar}
@@ -360,8 +339,8 @@ export default function SessionPage({ params }: { params: Promise<{ id: string }
               specialty={request.backerBio}
               rating={4.8}
               sessions={23}
+              trustScore={78}
               role="Backer"
-              accentColor="bg-indigo-600"
             />
             <ProfileCard
               avatar={creator.avatar}
@@ -370,107 +349,78 @@ export default function SessionPage({ params }: { params: Promise<{ id: string }
               specialty={creator.specialty}
               rating={creator.rating}
               sessions={creator.sessionsCompleted}
+              trustScore={creator.trustScore}
               role="Creator"
-              accentColor="bg-emerald-600"
             />
           </div>
         </div>
 
-        {/* Join section */}
-        <div
-          className={`rounded-2xl p-6 transition-all duration-500 ${
-            joined
-              ? "bg-gradient-to-br from-emerald-600 to-teal-600"
-              : "bg-gradient-to-br from-indigo-600 to-violet-700"
-          }`}
-        >
-          <div className="flex flex-col items-center gap-5 text-center">
+        {/* ── Join panel ── */}
+        <div className={`rounded-lg p-8 transition-colors duration-500 ${
+          joined ? "bg-[#052e16]" : "bg-[#0f766e]"
+        }`}>
+          <div className="flex flex-col items-center gap-6 text-center">
             {joined ? (
               <>
-                <p className="text-emerald-100 text-sm font-medium tracking-wide uppercase">
-                  Session in progress
-                </p>
                 <Timer remaining={remaining} />
-                <p className="text-white/70 text-sm">
+                <p className="typo-paragraph-small text-white/60">
                   Your Google Meet session is open in a new tab
                 </p>
                 <button
                   onClick={handleJoin}
-                  className="flex items-center gap-2 bg-white/20 hover:bg-white/30 text-white font-semibold px-6 py-3 rounded-xl transition-colors border border-white/30"
+                  className="flex items-center gap-2.5 bg-white/10 hover:bg-white/20 text-white typo-paragraph-small-semibold px-6 py-3 rounded-md transition-colors border border-white/20"
                 >
-                  <MeetIcon size={22} />
+                  <MeetIcon size={20} />
                   Rejoin Meeting
                 </button>
               </>
             ) : (
               <>
-                <div className="flex items-center gap-3">
-                  <MeetIcon size={48} />
+                <div className="flex items-center gap-4">
+                  <MeetIcon size={52} />
                   <div className="text-left">
-                    <p className="text-white font-bold text-lg">Google Meet Ready</p>
-                    <p className="text-indigo-200 text-sm">Your coaching room is set up and waiting</p>
+                    <p className="font-heading text-2xl font-semibold text-white">Google Meet Ready</p>
+                    <p className="typo-paragraph-small text-teal-200 mt-1">Your private coaching room is set up</p>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-6 text-white/70 text-sm">
-                  <span className="flex items-center gap-1.5">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <circle cx="12" cy="12" r="10" />
-                      <polyline points="12 6 12 12 16 14" />
-                    </svg>
-                    {request.coachingDuration} min session
-                  </span>
-                  <span className="flex items-center gap-1.5">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                    </svg>
-                    Encrypted & private
-                  </span>
-                  <span className="flex items-center gap-1.5">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <rect x="2" y="3" width="20" height="14" rx="2" />
-                      <line x1="8" y1="21" x2="16" y2="21" />
-                      <line x1="12" y1="17" x2="12" y2="21" />
-                    </svg>
-                    Screen share available
-                  </span>
+                <div className="flex items-center gap-6 typo-paragraph-small text-white/60 flex-wrap justify-center">
+                  <span className="flex items-center gap-1.5"><ClockIcon />{request.coachingDuration} min session</span>
+                  <span className="flex items-center gap-1.5"><ShieldIcon />Encrypted & private</span>
+                  <span className="flex items-center gap-1.5"><MonitorIcon />Screen share available</span>
                 </div>
 
                 <button
                   onClick={handleJoin}
-                  className="flex items-center gap-3 bg-white text-indigo-700 font-bold px-8 py-4 rounded-xl hover:bg-indigo-50 transition-colors shadow-lg text-base"
+                  className="flex items-center gap-3 bg-white text-[#0f766e] typo-paragraph-semibold px-8 py-4 rounded-md hover:bg-teal-50 transition-colors shadow-lg"
                 >
-                  <MeetIcon size={26} />
+                  <MeetIcon size={24} />
                   Join Google Meet
                 </button>
-                <p className="text-indigo-200/70 text-xs">
-                  Clicking join opens your coaching session in a new tab
+                <p className="typo-paragraph-mini text-white/40">
+                  Timer starts when you join. Opens in a new tab.
                 </p>
               </>
             )}
           </div>
         </div>
 
-        {/* Session notes */}
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
-          <h3 className="font-semibold text-gray-900 mb-3 text-sm">Session Notes</h3>
-          <ul className="text-xs text-gray-500 flex flex-col gap-2">
-            <li className="flex items-start gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 mt-1.5 flex-shrink-0" />
-              Please join the session a few minutes early to test your audio and video.
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 mt-1.5 flex-shrink-0" />
-              Have your goals and questions ready before the session starts.
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 mt-1.5 flex-shrink-0" />
-              Payment is released to the creator after the session ends.
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 mt-1.5 flex-shrink-0" />
-              You can rate and leave a review for the creator after the session.
-            </li>
+        {/* ── Session notes ── */}
+        <div className="bg-white rounded-lg border border-[#e9e9e7] shadow p-5">
+          <h3 className="typo-paragraph-semibold text-[#252522] mb-3">Session Guidelines</h3>
+          <ul className="flex flex-col gap-2.5">
+            {[
+              "Join a few minutes early to test your audio and video settings.",
+              "Have your goals and questions ready before the session starts.",
+              "Payment is held in escrow and released after you mark the session complete.",
+              "You can rate and leave a review for the creator within 48 hours post-session.",
+              "If anything goes wrong, use the Raise Dispute option within 48 hours.",
+            ].map((note, i) => (
+              <li key={i} className="flex items-start gap-2.5 typo-paragraph-small text-[#6f6f6a]">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#0d9488] mt-1.5 flex-shrink-0" />
+                {note}
+              </li>
+            ))}
           </ul>
         </div>
 

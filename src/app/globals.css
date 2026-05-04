@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f7f7f6;
+  --foreground: #252522;
 }
 
 @theme inline {
@@ -10,17 +10,105 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-fraunces), Georgia, serif;
+
+  /* ── SprouX Brand / Primary = Teal ── */
+  --color-primary:                  #0f766e;
+  --color-primary-hover:            #115e59;
+  --color-primary-foreground:       #ffffff;
+  --color-primary-subtle:           #f0fdfa;
+  --color-primary-subtle-foreground:#0f766e;
+  --color-primary-border:           #0d9488;
+
+  /* ── Surface ── */
+  --color-foreground-subtle:  #6f6f6a;
+  --color-card:               #ffffff;
+  --color-card-foreground:    #252522;
+  --color-card-subtle:        #f7f7f6;
+  --color-muted:              #f3f3f2;
+  --color-muted-foreground:   #6f6f6a;
+
+  /* ── Secondary ── */
+  --color-secondary:          #e9e9e7;
+  --color-secondary-foreground:#2f2f2b;
+  --color-secondary-hover:    #f3f3f2;
+
+  /* ── Border / Input ── */
+  --color-border:             #e9e9e7;
+  --color-border-subtle:      #f3f3f2;
+  --color-border-strong:      #afafab;
+
+  /* ── Status: Success ── */
+  --color-success:                  #16a34a;
+  --color-success-foreground:       #ffffff;
+  --color-success-subtle:           #f0fdf4;
+  --color-success-subtle-foreground:#16a34a;
+  --color-success-border:           #22c55e;
+
+  /* ── Status: Warning ── */
+  --color-warning:                  #d97706;
+  --color-warning-foreground:       #ffffff;
+  --color-warning-subtle:           #fffbeb;
+  --color-warning-subtle-foreground:#d97706;
+  --color-warning-border:           #f59e0b;
+
+  /* ── Status: Destructive ── */
+  --color-destructive:                  #dc2626;
+  --color-destructive-foreground:       #ffffff;
+  --color-destructive-subtle:           #fef2f2;
+  --color-destructive-subtle-foreground:#dc2626;
+
+  /* ── Status: Emphasis (Info) ── */
+  --color-emphasis:                  #2563eb;
+  --color-emphasis-subtle:           #eff6ff;
+  --color-emphasis-subtle-foreground:#2563eb;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* ── Base ── */
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* ── Heading font ── */
+.font-heading {
+  font-family: var(--font-heading);
+}
+
+/* ── SprouX Typography Scale ── */
+.typo-heading-1 {
+  font-family: var(--font-heading);
+  font-size: 48px; line-height: 48px; font-weight: 600; letter-spacing: -1.5px;
+}
+.typo-heading-2 {
+  font-family: var(--font-heading);
+  font-size: 30px; line-height: 32px; font-weight: 600; letter-spacing: -1px;
+}
+.typo-heading-3 {
+  font-family: var(--font-heading);
+  font-size: 24px; line-height: 28.8px; font-weight: 600; letter-spacing: -1px;
+}
+.typo-heading-4 {
+  font-size: 20px; line-height: 24px; font-weight: 600;
+}
+.typo-paragraph-lg         { font-size: 20px; line-height: 24px; font-weight: 400; letter-spacing: -1px; }
+.typo-paragraph-lg-medium  { font-size: 20px; line-height: 24px; font-weight: 500; letter-spacing: -1px; }
+.typo-paragraph-lg-semibold{ font-size: 20px; line-height: 24px; font-weight: 600; letter-spacing: -1px; }
+.typo-paragraph            { font-size: 16px; line-height: 24px; font-weight: 400; }
+.typo-paragraph-medium     { font-size: 16px; line-height: 24px; font-weight: 500; }
+.typo-paragraph-semibold   { font-size: 16px; line-height: 24px; font-weight: 600; }
+.typo-paragraph-small         { font-size: 14px; line-height: 20px; font-weight: 400; letter-spacing: 0.07px; }
+.typo-paragraph-small-medium  { font-size: 14px; line-height: 20px; font-weight: 500; letter-spacing: 0.07px; }
+.typo-paragraph-small-semibold{ font-size: 14px; line-height: 20px; font-weight: 600; letter-spacing: 0.07px; }
+.typo-paragraph-mini         { font-size: 12px; line-height: 16px; font-weight: 400; letter-spacing: 0.18px; }
+.typo-paragraph-mini-medium  { font-size: 12px; line-height: 16px; font-weight: 500; letter-spacing: 0.18px; }
+.typo-paragraph-mini-semibold{ font-size: 12px; line-height: 16px; font-weight: 600; letter-spacing: 0.18px; }
+
+/* ── Focus ring utilities ── */
+.focus-ring-brand:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px #99f6e4;
 }
