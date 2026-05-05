@@ -56,6 +56,7 @@ export interface CoachingRequest {
   status: RequestStatus;
   bidCount: number;
   expectedTimes?: string[];
+  biddingTimeHours?: number;
   isOwn?: boolean;
   applicants?: Applicant[];
   // Own-request lifecycle
@@ -185,6 +186,7 @@ export const MOCK_REQUESTS: CoachingRequest[] = [
     tags: ["vlogging", "content creation", "youtube", "video editing"],
     status: "open",
     bidCount: 4,
+    biddingTimeHours: 48,
     expectedTimes: ["2026-05-10T09:00", "2026-05-11T14:00", "2026-05-15T10:00"],
   },
   {
@@ -202,6 +204,7 @@ export const MOCK_REQUESTS: CoachingRequest[] = [
     tags: ["valorant", "gaming", "esports", "fps"],
     status: "open",
     bidCount: 7,
+    biddingTimeHours: 72,
     expectedTimes: ["2026-05-10T19:00", "2026-05-11T19:00", "2026-05-17T15:00"],
   },
   {
@@ -219,6 +222,7 @@ export const MOCK_REQUESTS: CoachingRequest[] = [
     tags: ["guitar", "music", "beginner", "acoustic"],
     status: "open",
     bidCount: 2,
+    biddingTimeHours: 48,
     expectedTimes: ["2026-05-12T18:00", "2026-05-13T18:00"],
   },
   {
@@ -236,6 +240,7 @@ export const MOCK_REQUESTS: CoachingRequest[] = [
     tags: ["spanish", "language", "conversation", "b2"],
     status: "open",
     bidCount: 5,
+    biddingTimeHours: 96,
     expectedTimes: ["2026-05-09T08:00", "2026-05-16T08:00", "2026-05-23T08:00"],
   },
   {
@@ -253,6 +258,7 @@ export const MOCK_REQUESTS: CoachingRequest[] = [
     tags: ["fitness", "running", "marathon", "nutrition"],
     status: "open",
     bidCount: 1,
+    biddingTimeHours: 48,
     expectedTimes: ["2026-05-11T07:00", "2026-05-18T07:00"],
   },
 
@@ -275,6 +281,7 @@ export const MOCK_REQUESTS: CoachingRequest[] = [
     bidCount: 3,
     isOwn: true,
     ownRequestStatus: "bid_receiving",
+    biddingTimeHours: 120,
     biddingDeadline: "5d 0h",
     expectedTimes: ["2026-05-10T10:00", "2026-05-11T14:00", "2026-05-12T10:00"],
     applicants: [
@@ -351,6 +358,7 @@ export const MOCK_REQUESTS: CoachingRequest[] = [
     bidCount: 3,
     isOwn: true,
     ownRequestStatus: "bid_receiving",
+    biddingTimeHours: 48,
     biddingDeadline: "18h 30m",
     expectedTimes: ["2026-05-10T09:00", "2026-05-11T14:00", "2026-05-12T10:00"],
     applicants: [

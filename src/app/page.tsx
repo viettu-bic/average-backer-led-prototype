@@ -163,6 +163,7 @@ function ChatModal({ title, messages, myRole, onClose }: {
 function CreateModal({ onClose, onSubmit }: { onClose: () => void; onSubmit: (r: CoachingRequest) => void }) {
   const [form, setForm] = useState({ title: "Looking for a Python & data science mentor", description: "I'm learning Python for data analysis and ML. Seeking a mentor to guide me through NumPy, Pandas, and sklearn with mini-projects.", duration: "60", price: "75", tags: "python, data science, machine learning, beginner" });
   const [times, setTimes] = useState<string[]>(["2026-05-14T10:00"]);
+  const [biddingHours, setBiddingHours] = useState(48);
 
   const addTime = () => setTimes([...times, ""]);
   const removeTime = (i: number) => setTimes(times.filter((_, idx) => idx !== i));
@@ -177,7 +178,8 @@ function CreateModal({ onClose, onSubmit }: { onClose: () => void; onSubmit: (r:
       coachingDuration: parseInt(form.duration), price: parseInt(form.price),
       tags: form.tags.split(",").map(t => t.trim()).filter(Boolean),
       status: "open", bidCount: 0, isOwn: true, ownRequestStatus: "bid_receiving",
-      biddingDeadline: "48h 0m", applicants: [],
+      biddingTimeHours: biddingHours,
+      biddingDeadline: `${biddingHours}h 0m`, applicants: [],
       expectedTimes: times.filter(Boolean),
     });
     onClose();
@@ -249,10 +251,17 @@ function CreateModal({ onClose, onSubmit }: { onClose: () => void; onSubmit: (r:
             </div>
           </div>
 
-          <div>
-            <label className="block typo-paragraph-mini-semibold text-[#6f6f6a] uppercase tracking-wide mb-1.5">Topic Tags</label>
-            <input type="text" value={form.tags} onChange={e => setForm({ ...form, tags: e.target.value })} className={inputCls} placeholder="e.g. python, beginner, data science" />
-            <p className="typo-paragraph-mini text-[#afafab] mt-1">Comma-separated, up to 5 tags</p>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block typo-paragraph-mini-semibold text-[#6f6f6a] uppercase tracking-wide mb-1.5">Bid Window (hours)</label>
+              <input type="number" min={12} max={168} value={biddingHours} onChange={e => setBiddingHours(parseInt(e.target.value) || 48)} className={inputCls} />
+              <p className="typo-paragraph-mini text-[#afafab] mt-1">How long coaches can bid (default 48h)</p>
+            </div>
+            <div>
+              <label className="block typo-paragraph-mini-semibold text-[#6f6f6a] uppercase tracking-wide mb-1.5">Topic Tags</label>
+              <input type="text" value={form.tags} onChange={e => setForm({ ...form, tags: e.target.value })} className={inputCls} placeholder="e.g. python, beginner" />
+              <p className="typo-paragraph-mini text-[#afafab] mt-1">Comma-separated, up to 5</p>
+            </div>
           </div>
 
           <button type="submit" className="w-full bg-[#0f766e] hover:bg-[#115e59] text-white typo-paragraph-small-semibold py-2.5 rounded-md transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[#99f6e4] mt-1">
@@ -267,9 +276,8 @@ function CreateModal({ onClose, onSubmit }: { onClose: () => void; onSubmit: (r:
 // ─── Bid (Submit) Modal ───────────────────────────────────────────────────────
 type PitchTab = "record" | "upload" | "url";
 
-function BidModal({ request, onClose, onSubmit }: { request: CoachingRequest; onClose: () => void; onSubmit: (timePicked: string, biddingHours: number, price: number) => void }) {
+function BidModal({ request, onClose, onSubmit }: { request: CoachingRequest; onClose: () => void; onSubmit: (timePicked: string, price: number) => void }) {
   const [timePicked, setTimePicked] = useState(request.expectedTimes?.[0] ?? "");
-  const [biddingHours, setBiddingHours] = useState(48);
   const [price, setPrice] = useState(request.price);
   const [pitch, setPitch] = useState("I'm very interested and believe my background makes me a strong fit. I've helped multiple learners achieve similar goals and would bring a structured plan to our session.");
   const [pitchTab, setPitchTab] = useState<PitchTab | null>(null);
@@ -294,7 +302,12 @@ function BidModal({ request, onClose, onSubmit }: { request: CoachingRequest; on
             <Avatar src={request.backerAvatar} name={request.backerName} size={36} />
             <div className="flex-1 min-w-0">
               <p className="typo-paragraph-small-semibold text-[#252522] leading-snug line-clamp-1">{request.title}</p>
-              <p className="typo-paragraph-mini text-[#6f6f6a] mt-0.5">{request.backerHandle} · {request.coachingDuration} min · ${request.price} budget</p>
+              <p className="typo-paragraph-mini text-[#6f6f6a] mt-0.5">
+                {request.backerHandle} · {request.coachingDuration} min · ${request.price} budget
+                {request.biddingTimeHours && (
+                  <span className="ml-1 text-[#d97706] font-semibold">· Bid window: {request.biddingTimeHours}h</span>
+                )}
+              </p>
             </div>
           </div>
 
@@ -313,24 +326,17 @@ function BidModal({ request, onClose, onSubmit }: { request: CoachingRequest; on
                 ))}
               </div>
             ) : (
-              <p className="typo-paragraph-small text-[#afafab] italic">No specific times suggested by the backer.</p>
+              <p className="typo-paragraph-small text-[#afafab] italic">No specific times suggested by the coachee.</p>
             )}
           </div>
 
-          {/* Bidding time + price */}
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block typo-paragraph-mini-semibold text-[#6f6f6a] uppercase tracking-wide mb-1.5">Bid Valid For (hours)</label>
-              <input type="number" min={12} max={168} value={biddingHours} onChange={e => setBiddingHours(parseInt(e.target.value))} className={inputCls} />
-              <p className="typo-paragraph-mini text-[#afafab] mt-1">Default 48h</p>
+          {/* Price */}
+          <div>
+            <label className="block typo-paragraph-mini-semibold text-[#6f6f6a] uppercase tracking-wide mb-1.5">Your Price (USD)</label>
+            <div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 typo-paragraph-small text-[#6f6f6a]">$</span>
+              <input type="number" min={5} max={999} value={price} onChange={e => setPrice(parseInt(e.target.value))} className={`${inputCls} pl-7`} />
             </div>
-            <div>
-              <label className="block typo-paragraph-mini-semibold text-[#6f6f6a] uppercase tracking-wide mb-1.5">Your Price (USD)</label>
-              <div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 typo-paragraph-small text-[#6f6f6a]">$</span>
-                <input type="number" min={5} max={999} value={price} onChange={e => setPrice(parseInt(e.target.value))} className={`${inputCls} pl-7`} />
-              </div>
-              <p className="typo-paragraph-mini text-[#afafab] mt-1">Budget: ${request.price}</p>
-            </div>
+            <p className="typo-paragraph-mini text-[#afafab] mt-1">Coachee budget: ${request.price}</p>
           </div>
 
           {/* Pitch note */}
@@ -402,7 +408,7 @@ function BidModal({ request, onClose, onSubmit }: { request: CoachingRequest; on
             )}
           </div>
 
-          <button onClick={() => onSubmit(timePicked, biddingHours, price)}
+          <button onClick={() => onSubmit(timePicked, price)}
             className="w-full bg-[#0f766e] hover:bg-[#115e59] text-white typo-paragraph-small-semibold py-2.5 rounded-md transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[#99f6e4]">
             Submit Bid
           </button>
@@ -687,7 +693,7 @@ function YourBidModal({ bid, onClose, onOpenChat, onSimulateStart }: {
           {bid.status === "wait_for_reply" && (
             <div className="bg-[#fffbeb] rounded-lg p-4 border border-[#f59e0b] flex items-center gap-3">
               <div className="w-5 h-5 border-2 border-[#d97706] border-t-transparent rounded-full animate-spin flex-shrink-0" />
-              <div><p className="typo-paragraph-small-semibold text-[#d97706]">Waiting for backer response</p><p className="typo-paragraph-mini text-[#d97706]/70 mt-0.5">Bid valid for {bid.biddingTimeHours}h · backers typically respond within 48h</p></div>
+              <div><p className="typo-paragraph-small-semibold text-[#d97706]">Waiting for coachee response</p><p className="typo-paragraph-mini text-[#d97706]/70 mt-0.5">Bid valid for {bid.biddingTimeHours}h · coachees typically respond within 48h</p></div>
             </div>
           )}
           {bid.status === "scheduled" && bid.scheduledTime && (
@@ -970,7 +976,7 @@ export default function Home() {
     return () => clearTimeout(t);
   }, [notif]);
 
-  const handleBidSubmit = useCallback((timePicked: string, biddingHours: number, price: number) => {
+  const handleBidSubmit = useCallback((timePicked: string, price: number) => {
     if (!bidTarget) return;
     const newBid: YourBid = {
       id: `bid_${Date.now()}`,
@@ -984,7 +990,7 @@ export default function Home() {
       postedAt: bidTarget.postedAt,
       price,
       timePicked: timePicked ? fmtDT(timePicked) : "TBD",
-      biddingTimeHours: biddingHours,
+      biddingTimeHours: bidTarget.biddingTimeHours ?? 48,
       status: "wait_for_reply",
     };
     setYourBids(prev => [newBid, ...prev]);
