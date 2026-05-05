@@ -583,15 +583,72 @@ function DoneModal({ request, onClose, onOpenChat }: { request: CoachingRequest;
 }
 
 // ─── Ongoing Modal ────────────────────────────────────────────────────────────
-function OngoingModal({ request, onClose }: { request: CoachingRequest; onClose: () => void }) {
+function OngoingModal({ request, onClose, onEndSession }: {
+  request: CoachingRequest; onClose: () => void; onEndSession: (rating: number) => void;
+}) {
   const initial = Math.max(0, (request.coachingDuration * 60) - ((request.sessionStartedMinutesAgo ?? 0) * 60));
   const [remaining, setRemaining] = useState(initial);
+  const [phase, setPhase] = useState<"live" | "rating">("live");
+  const [rating, setRating] = useState(0);
+  const [hover, setHover] = useState(0);
+
   useEffect(() => {
+    if (phase !== "live") return;
     const t = setInterval(() => setRemaining(p => Math.max(0, p - 1)), 1000);
     return () => clearInterval(t);
-  }, []);
+  }, [phase]);
   const fmt = (n: number) => String(n).padStart(2, "0");
   const h = Math.floor(remaining / 3600), m = Math.floor((remaining % 3600) / 60), s = remaining % 60;
+
+  if (phase === "rating") {
+    const creatorName = request.selectedCreator?.name ?? "your coach";
+    return (
+      <Modal onClose={onClose}>
+        <div className="bg-white rounded-lg shadow-xl overflow-hidden">
+          <div className="bg-[#16a34a] px-6 py-5 text-white flex items-center justify-between">
+            <div>
+              <h2 className="font-heading text-xl font-semibold">Rate Your Coach</h2>
+              <p className="text-green-100 typo-paragraph-small mt-0.5">How was your session with {creatorName}?</p>
+            </div>
+            <button onClick={onClose} className="text-white/70 hover:text-white"><XIcon /></button>
+          </div>
+          <div className="p-6 flex flex-col gap-5">
+            {request.selectedCreator && (
+              <div className="flex items-center gap-3 bg-[#f7f7f6] rounded-lg p-3 border border-[#e9e9e7]">
+                <Avatar src={request.selectedCreator.avatar} name={request.selectedCreator.name} size={44} />
+                <div>
+                  <p className="typo-paragraph-small-semibold text-[#252522]">{request.selectedCreator.name}</p>
+                  <p className="typo-paragraph-mini-semibold text-[#0f766e]">{request.selectedCreator.specialty}</p>
+                </div>
+              </div>
+            )}
+            <div className="text-center">
+              <p className="typo-paragraph-mini-semibold text-[#6f6f6a] uppercase tracking-wide mb-3">Your Rating *</p>
+              <div className="flex justify-center gap-2">
+                {[1,2,3,4,5].map(s => (
+                  <button key={s} onClick={() => setRating(s)} onMouseEnter={() => setHover(s)} onMouseLeave={() => setHover(0)}
+                    className={`text-4xl transition-all duration-100 hover:scale-110 ${(hover || rating) >= s ? "text-[#d97706]" : "text-[#e9e9e7]"}`}>
+                    ★
+                  </button>
+                ))}
+              </div>
+              {rating > 0 && (
+                <p className="typo-paragraph-mini-semibold text-[#d97706] mt-2">
+                  {["", "Poor", "Fair", "Good", "Great", "Excellent!"][rating]}
+                </p>
+              )}
+            </div>
+            <button
+              onClick={() => rating > 0 && onEndSession(rating)}
+              disabled={rating === 0}
+              className={`w-full typo-paragraph-small-semibold py-2.5 rounded-md transition-colors ${rating > 0 ? "bg-[#16a34a] hover:bg-[#15803d] text-white" : "bg-[#e9e9e7] text-[#afafab] cursor-not-allowed"}`}>
+              Submit & Complete Session
+            </button>
+          </div>
+        </div>
+      </Modal>
+    );
+  }
 
   return (
     <Modal onClose={onClose}>
@@ -624,8 +681,12 @@ function OngoingModal({ request, onClose }: { request: CoachingRequest; onClose:
             </div>
           )}
           <button onClick={() => window.open("about:blank", "_blank")}
-            className="w-full flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white typo-paragraph-small-semibold py-3 rounded-md transition-colors">
+            className="w-full flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white typo-paragraph-small-semibold py-2.5 rounded-md transition-colors">
             <VideoIcon />Rejoin Google Meet
+          </button>
+          <button onClick={() => setPhase("rating")}
+            className="w-full flex items-center justify-center gap-2 bg-[#f3f3f2] hover:bg-[#e9e9e7] text-[#6f6f6a] typo-paragraph-small-semibold py-2.5 rounded-md border border-[#e9e9e7] transition-colors">
+            Simulate: End Session
           </button>
         </div>
       </div>
@@ -634,11 +695,12 @@ function OngoingModal({ request, onClose }: { request: CoachingRequest; onClose:
 }
 
 // ─── Your Bid Modal ───────────────────────────────────────────────────────────
-function YourBidModal({ bid, onClose, onOpenChat, onSimulateStart }: {
-  bid: YourBid; onClose: () => void; onOpenChat: () => void; onSimulateStart: () => void;
+function YourBidModal({ bid, onClose, onOpenChat, onSimulateStart, onEndSession }: {
+  bid: YourBid; onClose: () => void; onOpenChat: () => void; onSimulateStart: () => void; onEndSession: () => void;
 }) {
   // Countdown for ongoing state
   const [remaining, setRemaining] = useState(bid.requestDuration * 60);
+  const [confirmEnd, setConfirmEnd] = useState(false);
   useEffect(() => {
     if (bid.status !== "ongoing") return;
     const t = setInterval(() => setRemaining(p => Math.max(0, p - 1)), 1000);
@@ -731,12 +793,28 @@ function YourBidModal({ bid, onClose, onOpenChat, onSimulateStart }: {
             </button>
           )}
 
-          {/* Join Meet — for ongoing */}
-          {bid.status === "ongoing" && (
-            <button onClick={() => window.open("about:blank", "_blank")}
-              className="w-full flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white typo-paragraph-small-semibold py-2.5 rounded-md transition-colors">
-              <VideoIcon />Join Google Meet
-            </button>
+          {/* Join Meet + End Session — for ongoing */}
+          {bid.status === "ongoing" && !confirmEnd && (
+            <>
+              <button onClick={() => window.open("about:blank", "_blank")}
+                className="w-full flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white typo-paragraph-small-semibold py-2.5 rounded-md transition-colors">
+                <VideoIcon />Join Google Meet
+              </button>
+              <button onClick={() => setConfirmEnd(true)}
+                className="w-full flex items-center justify-center gap-2 bg-[#f3f3f2] hover:bg-[#e9e9e7] text-[#6f6f6a] typo-paragraph-small-semibold py-2.5 rounded-md border border-[#e9e9e7] transition-colors">
+                Simulate: End Session
+              </button>
+            </>
+          )}
+          {bid.status === "ongoing" && confirmEnd && (
+            <div className="bg-[#f0fdf4] border border-[#22c55e] rounded-lg p-4 flex flex-col gap-3">
+              <p className="typo-paragraph-small-semibold text-[#16a34a] text-center">Mark session as complete?</p>
+              <p className="typo-paragraph-mini text-[#6f6f6a] text-center">The coachee will be asked to rate the session.</p>
+              <div className="flex gap-2">
+                <button onClick={() => setConfirmEnd(false)} className="flex-1 bg-[#f3f3f2] hover:bg-[#e9e9e7] text-[#252522] typo-paragraph-small-semibold py-2 rounded-md border border-[#e9e9e7] transition-colors">Cancel</button>
+                <button onClick={onEndSession} className="flex-1 bg-[#16a34a] hover:bg-[#15803d] text-white typo-paragraph-small-semibold py-2 rounded-md transition-colors">Confirm Complete</button>
+              </div>
+            </div>
           )}
 
           {/* Chat button */}
@@ -885,7 +963,8 @@ function YourBidCard({ bid, onOpen }: { bid: YourBid; onOpen: (b: YourBid) => vo
 type Notif =
   | { type: "bid_submitted"; requestTitle: string }
   | { type: "request_scheduled"; requestTitle: string; creatorName: string; scheduledTime: string }
-  | { type: "session_live"; request: CoachingRequest };
+  | { type: "session_live"; request: CoachingRequest }
+  | { type: "session_complete"; rating?: number };
 
 function NotifBanner({ notif, onDismiss, onAction }: { notif: Notif; onDismiss: () => void; onAction: () => void }) {
   if (notif.type === "bid_submitted") {
@@ -916,6 +995,23 @@ function NotifBanner({ notif, onDismiss, onAction }: { notif: Notif; onDismiss: 
           </div>
           <button onClick={onAction} className="bg-[#2563eb] hover:bg-blue-700 text-white typo-paragraph-small-semibold px-4 py-2 rounded-md transition-colors flex-shrink-0 whitespace-nowrap">View</button>
           <button onClick={onDismiss} className="text-[#afafab] hover:text-[#6f6f6a] transition-colors flex-shrink-0 ml-1"><XIcon /></button>
+        </div>
+      </div>
+    );
+  }
+  if (notif.type === "session_complete") {
+    const stars = notif.rating ? "★".repeat(notif.rating) + "☆".repeat(5 - notif.rating) : "";
+    return (
+      <div className="fixed top-4 left-1/2 -translate-x-1/2 z-[80] w-full max-w-lg px-4 animate-slide-down">
+        <div className="bg-white border border-[#22c55e] rounded-lg shadow-xl p-4 flex items-center gap-3">
+          <div className="w-9 h-9 bg-[#f0fdf4] rounded-full flex items-center justify-center flex-shrink-0 text-[#16a34a]"><CheckIcon /></div>
+          <div className="flex-1 min-w-0">
+            <p className="typo-paragraph-small-semibold text-[#252522]">Session completed! 🎉</p>
+            <p className="typo-paragraph-mini text-[#6f6f6a] mt-0.5">
+              {notif.rating ? <span className="text-[#d97706] font-semibold">{stars} {notif.rating}/5</span> : "Marked as done."}
+            </p>
+          </div>
+          <button onClick={onDismiss} className="text-[#afafab] hover:text-[#6f6f6a] transition-colors flex-shrink-0"><XIcon /></button>
         </div>
       </div>
     );
@@ -1023,6 +1119,20 @@ export default function Home() {
     setViewMode("your_requests");
   }, [ownModal]);
 
+  const handleRequestEndSession = useCallback((requestId: string, rating: number) => {
+    setRequests(prev => prev.map(r =>
+      r.id === requestId ? { ...r, ownRequestStatus: "done" as const, rating } : r
+    ));
+    setOwnModal(null);
+    setNotif({ type: "session_complete", rating });
+  }, []);
+
+  const handleBidEndSession = useCallback((bidId: string) => {
+    setYourBids(prev => prev.map(b => b.id === bidId ? { ...b, status: "done" as const } : b));
+    setBidModal(null);
+    setNotif({ type: "session_complete" });
+  }, []);
+
   const handleSimulateStart = useCallback((requestId: string) => {
     setRequests(prev => prev.map(r =>
       r.id === requestId ? { ...r, ownRequestStatus: "ongoing" as const, sessionStartedMinutesAgo: 0 } : r
@@ -1067,6 +1177,8 @@ export default function Home() {
               setViewMode("your_bids");
             } else if (notif.type === "request_scheduled") {
               setViewMode("your_requests");
+            } else if (notif.type === "session_complete") {
+              // no-op, banner has no action button
             } else {
               setOwnModal(notif.request);
             }
@@ -1098,14 +1210,16 @@ export default function Home() {
           onOpenChat={() => openChat(ownModal.chatHistory ?? [], `Chat — ${ownModal.title}`, "backer")} />
       )}
       {ownModal && ownModal.ownRequestStatus === "ongoing" && (
-        <OngoingModal request={ownModal} onClose={() => setOwnModal(null)} />
+        <OngoingModal request={ownModal} onClose={() => setOwnModal(null)}
+          onEndSession={(rating) => handleRequestEndSession(ownModal.id, rating)} />
       )}
 
       {/* Your bid modal */}
       {bidModal && (
         <YourBidModal bid={bidModal} onClose={() => setBidModal(null)}
           onOpenChat={() => openChat(bidModal.chatHistory ?? [], bidModal.requestTitle, "creator")}
-          onSimulateStart={() => handleBidSimulateStart(bidModal.id)} />
+          onSimulateStart={() => handleBidSimulateStart(bidModal.id)}
+          onEndSession={() => handleBidEndSession(bidModal.id)} />
       )}
 
       {/* ── Page ── */}
