@@ -130,7 +130,7 @@ export const CHAT_DESIGN_RAVI: ChatMessage[] = [
   { id: "1", sender: "backer", senderName: "Priya", message: "Hi Ravi! Can you share some landing pages you've designed for similar SaaS tools?", time: "2d ago · 11:05 AM" },
   { id: "2", sender: "creator", senderName: "Ravi Shankar", message: "Sure! Here are 3 recent ones: [notion.so/ravi-portfolio]. All achieved >25% signup lift after redesign.", time: "2d ago · 11:22 AM" },
   { id: "3", sender: "backer", senderName: "Priya", message: "These look great, especially the analytics tool one. Your pricing feels a bit below market — is that intentional?", time: "2d ago · 11:30 AM" },
-  { id: "4", sender: "creator", senderName: "Ravi Shankar", message: "Yes, I'm building my review base on CoachMatch. Happy to go deep on your project at a fair rate.", time: "2d ago · 11:38 AM" },
+  { id: "4", sender: "creator", senderName: "Ravi Shankar", message: "Yes, I'm building my review base on SprouX Coach. Happy to go deep on your project at a fair rate.", time: "2d ago · 11:38 AM" },
 ];
 
 export const CHAT_SQL_SCHEDULED: ChatMessage[] = [

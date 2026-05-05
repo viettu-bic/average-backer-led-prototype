@@ -19,7 +19,7 @@ const fraunces = Fraunces({
 });
 
 export const metadata: Metadata = {
-  title: "CoachMatch — Coachee-Led Coaching Marketplace",
+  title: "SprouX Coach — Coachee-Led Coaching Marketplace",
   description: "Backers post what they want to learn. Creators apply with their expertise. One session. Real results.",
 };
 

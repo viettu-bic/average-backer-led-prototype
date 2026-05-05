@@ -1231,8 +1231,7 @@ export default function Home() {
               <div className="w-7 h-7 bg-[#0f766e] rounded-md flex items-center justify-center flex-shrink-0">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z" /></svg>
               </div>
-              <span className="font-heading font-semibold text-[#252522] text-lg tracking-tight">CoachMatch</span>
-              <span className="typo-paragraph-mini-semibold bg-[#f0fdfa] text-[#0f766e] border border-[#0d9488]/30 px-2 py-0.5 rounded-full hidden sm:inline">Coachee-Led</span>
+              <span className="font-heading font-semibold text-[#252522] text-lg tracking-tight">SprouX Coach</span>
             </div>
             <div className="flex items-center gap-3">
               <button onClick={() => setShowCreate(true)}
