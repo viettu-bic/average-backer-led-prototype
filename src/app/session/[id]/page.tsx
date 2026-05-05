@@ -76,7 +76,7 @@ function tagColor(tag: string) {
 
 // ─── Trust badge ──────────────────────────────────────────────────────────────
 function TrustBadge({ score, sessions }: { score: number; sessions: number }) {
-  if (sessions < 3) return <span className="typo-paragraph-mini-semibold bg-[#fffbeb] text-[#d97706] border border-[#f59e0b] px-2 py-0.5 rounded-full">New Creator</span>;
+  if (sessions < 3) return <span className="typo-paragraph-mini-semibold bg-[#fffbeb] text-[#d97706] border border-[#f59e0b] px-2 py-0.5 rounded-full">New Coach</span>;
   if (score >= 80) return <span className="typo-paragraph-mini-semibold bg-[#f0fdf4] text-[#16a34a] border border-[#22c55e] px-2 py-0.5 rounded-full">★ Top Rated</span>;
   return <span className="typo-paragraph-mini-semibold bg-[#f3f3f2] text-[#6f6f6a] border border-[#e9e9e7] px-2 py-0.5 rounded-full">Score {score}</span>;
 }
@@ -101,9 +101,9 @@ function ProfileCard({
 }: {
   avatar: string; name: string; handle: string; specialty: string;
   rating: number; sessions: number; trustScore: number;
-  role: "Backer" | "Creator";
+  role: "Coachee" | "Coach";
 }) {
-  const isBacker = role === "Backer";
+  const isBacker = role === "Coachee";
   return (
     <div className="bg-white rounded-lg border border-[#e9e9e7] shadow p-5 flex flex-col items-center text-center gap-3 flex-1">
       <div className="relative">
@@ -340,7 +340,7 @@ export default function SessionPage({ params }: { params: Promise<{ id: string }
               rating={4.8}
               sessions={23}
               trustScore={78}
-              role="Backer"
+              role="Coachee"
             />
             <ProfileCard
               avatar={creator.avatar}
@@ -350,7 +350,7 @@ export default function SessionPage({ params }: { params: Promise<{ id: string }
               rating={creator.rating}
               sessions={creator.sessionsCompleted}
               trustScore={creator.trustScore}
-              role="Creator"
+              role="Coach"
             />
           </div>
         </div>
@@ -413,7 +413,7 @@ export default function SessionPage({ params }: { params: Promise<{ id: string }
               "Join a few minutes early to test your audio and video settings.",
               "Have your goals and questions ready before the session starts.",
               "Payment is held in escrow and released after you mark the session complete.",
-              "You can rate and leave a review for the creator within 48 hours post-session.",
+              "You can rate and leave a review for the coach within 48 hours post-session.",
               "If anything goes wrong, use the Raise Dispute option within 48 hours.",
             ].map((note, i) => (
               <li key={i} className="flex items-start gap-2.5 typo-paragraph-small text-[#6f6f6a]">
